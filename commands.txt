@@ -1,0 +1,31 @@
+1. venv
+2. pip install django
+3. django-admin startproject mysite . - create new project
+4. python manage.py migrate - create DB file
+5. python manage.py runserver - run project
+6. python manage.py startapp app - create new sub-app
+7. - add new app on INSTALLED_APPS from settings.py 
+8. - create models in app/models.py
+9. python manage.py createsuperuser - create super admin
+10. python manage.py makemigrations app - create table into app
+11. python manage.py migrate app  - migrate table into DB
+12. - check admin panel: http://127.0.0.1:8000/admin/
+
+######  Django ORM і QuerySets
+python manage.py shell - перейти у режим QuerySets
+>>> from blog.models import Post - імпорт об'єкта
+>>> Post.objects.all() - вивести усі пости об'єкта Post 
+>>> from django.contrib.auth.models import User - імпортуємо модель User
+>>> User.objects.all() - список усіх користувачів
+>>> me = User.objects.get(username='user_name')
+>>> Post.objects.create(author=me, title='Sample title', text='Test') - створення об'єкту
+>>> post = Post.objects.get(title="Sample title") - отримання поста за вказаним параметром
+>>> post.publish() - публікація отриманого поста
+>>> Post.objects.filter(author=me) - виведення постів за вказаним автором
+>>> Post.objects.filter(title__contains='title') - виведення постів за неаявністю вказаного слова у заголовку
+>>> from django.utils import timezone - імпорт поточної часової зони
+>>> Post.objects.filter(published_date__lte=timezone.now()) - виведення опублікованих постів
+>>> Post.objects.order_by('created_date') - впорядкування постів за вказаним стовпцем по зростанню
+>>> Post.objects.order_by('-created_date') - впорядкування у зворотньому порядку
+>>> Post.objects.filter(published_date__lte=timezone.now()).order_by('published_date') - ланцюжок із QuerySets
+>>> exit() - вихід з консолі
