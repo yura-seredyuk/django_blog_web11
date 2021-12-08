@@ -1,8 +1,9 @@
 {% load static %}
-    <header>
+    <header class="container-fluid">
         <div>
             <h1>
-                <a href="#">Django blog</a>
+                <a href="{% url 'home' %}">Django blog</a>
+                <a href="{% url 'post_create' %}"><i class="bi bi-plus-circle-fill" style="color: green;"></i></a>
             </h1>
         </div>
     </header>
