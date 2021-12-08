@@ -1,12 +1,16 @@
 {% extends 'blog/base.html' %}
-{% block title %}{{ post.title }}{% endblock %}
+{% block title %}{% if pk %}Edit{% else %}Create{% endif %} post{% endblock %}
 {% block content %}
-        <h2>Single post:</h2>
+        <h2>{% if pk %}Edit{% else %}Create{% endif %} post:</h2>
         <div>
             <form action="" method="POST">
                 {% csrf_token %}
                 {{ form.as_p }}
-                <!-- <a href=""></a> -->
+                {% if pk %}
+                <a href="{% url 'post_details' pk=pk %}">Cancel</a>
+                {% else %}
+                <a href="{% url 'home' %}">Cancel</a>
+                {% endif %}
                 <button type="submit" class="btn btn-success">Save</button>
             </form>            
         </div>
