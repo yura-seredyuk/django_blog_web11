@@ -2,11 +2,20 @@
 {% block title %}{{ post.title }}{% endblock %}
 {% block content %}
         <h2>Single post:</h2>
-        <div>
-            <p>published: {{ post.published_date }}</p>
-            <h3>{{ post.title }}</h3>
-            <p><a href="{% url 'post_delete' pk=post.pk %}"><i class="bi bi-trash-fill" style="color: red;"></i></a> <a href="{% url 'post_edit' pk=post.pk %}"><i class="bi bi-pencil-fill" style="color: orange;"></i></a></p>
-            <p>{{ post.text|linebreaksbr }}</p>
+        <div class="row">
+            {% if post.image %}
+            <div class="col-3">
+                <img src="{{ post.image.url }}" alt="{{ post.title }}" width="300px">
+            </div>
+            <div class="col-9">
+            {% else %}
+            <div class="col-12">
+            {% endif %}
+                <p>published: {{ post.published_date }}</p>
+                <h3>{{ post.title }}</h3>
+                <p><a href="{% url 'post_delete' pk=post.pk %}"><i class="bi bi-trash-fill" style="color: red;"></i></a> <a href="{% url 'post_edit' pk=post.pk %}"><i class="bi bi-pencil-fill" style="color: orange;"></i></a></p>
+                <p>{{ post.text|linebreaksbr }}</p>
+            </div>
         </div>
         <hr>
 {% endblock %}

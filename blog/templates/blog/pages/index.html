@@ -3,10 +3,19 @@
 {% block content %}
         <h2>All posts:</h2>
         {% for post in posts %}
-        <div>
-            <p>published: {{ post.published_date }}</p>
-            <h3><a href="{% url 'post_details' pk=post.pk %}">{{ post.title }}</a></h3>
-            <p>{{ post.text|linebreaksbr }}</p>
+        <div class="row">
+            {% if post.image %}
+            <div class="col-3">
+                <img src="{{ post.image.url }}" alt="{{ post.title }}" width="300px">
+            </div>
+            <div class="col-9">
+            {% else %}
+            <div class="col-12">
+            {% endif %}
+                <p>published: {{ post.published_date }}</p>
+                <h3><a href="{% url 'post_details' pk=post.pk %}">{{ post.title }}</a></h3>
+                <p>{{ post.text|linebreaksbr }}</p>
+            </div>
         </div>
         <hr>
         {% endfor %}

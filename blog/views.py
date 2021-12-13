@@ -3,7 +3,9 @@ from django.shortcuts import redirect, render, get_object_or_404
 from django.utils import timezone
 from blog.models import Post
 
-from .forms import PostForm
+from .forms import PostForm, LoginForm
+from django.http import HttpResponse
+from django.contrib.auth import authenticate, login, logout
 
 
 def home(request):
@@ -50,3 +52,28 @@ def post_edit(request, pk):
     return render(request,'blog/pages/post_edit.html', 
                             {'form':form,
                             'pk': pk})
+
+
+def user_login(request):
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            client_data = form.cleaned_data
+            user = authenticate(username = client_data['username'],
+                                password = client_data['password'])
+            if user is not None:
+                if user.is_active:
+                    login(request,user)
+                    # return HttpResponse('Authenticated successful!')
+                    return redirect('home')
+                else:
+                    return HttpResponse('User is blocked!')
+            else:
+                return HttpResponse('User not found!')
+    else:
+        form = LoginForm()
+    return render(request, 'blog/pages/login.html', {'form':form})
+
+
+def user_logout():
+    pass
